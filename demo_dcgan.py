@@ -90,7 +90,7 @@ if __name__ == '__main__':
     print(netG)
 
     netD = inputmodel.Discriminator().to(device)
-    netD.apply(weights_init)
+    netD.apply(inputmodel.weights_init)
     if opt.netD != '':
         netD.load_state_dict(torch.load(opt.netD))
     print(netD)
