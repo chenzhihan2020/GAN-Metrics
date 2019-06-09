@@ -30,9 +30,6 @@ def weights_init(m):
 
 
 
-        return output.view(-1, 1).squeeze(1)
-
-
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('--dataset', required=True, help='cifar10 | lsun | imagenet | folder | lfw | fake')
