@@ -159,7 +159,7 @@ if __name__ == '__main__':
     nc = 3
 
     netG = Generator(ngpu).to(device)
-    netG.apply(weights_init)
+    netG.apply(inputmodel.weights_init)
     if opt.netG != '':
         netG.load_state_dict(torch.load(opt.netG))
     print(netG)
