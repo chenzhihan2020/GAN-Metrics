@@ -28,7 +28,7 @@ img_size=32
 device = torch.device('cuda:0') if torch.cuda.is_available() else torch.device('cpu')
 
 
-def weights_init_normal(m):
+def weights_init(m):
     classname = m.__class__.__name__
     if classname.find("Conv") != -1:
         torch.nn.init.normal_(m.weight.data, 0.0, 0.02)
