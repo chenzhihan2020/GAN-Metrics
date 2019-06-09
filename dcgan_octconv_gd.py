@@ -19,7 +19,9 @@ import time
 os.makedirs("images", exist_ok=True)
 os.makedirs("models", exist_ok=True)
 
-
+latent_dim=100
+channels=3
+image_size=3.2
 
 
 #cuda = True if torch.cuda.is_available() else False
@@ -175,8 +177,8 @@ class Generator(nn.Module):
     def __init__(self):
         super(Generator, self).__init__()
 
-        self.init_size = opt.img_size // 4
-        self.l1 = nn.Sequential(nn.Linear(opt.latent_dim, 128 * self.init_size ** 2))
+        self.init_size = img_size // 4
+        self.l1 = nn.Sequential(nn.Linear(latent_dim, 128 * self.init_size ** 2))
 
         self.conv_blocks = nn.Sequential(
             nn.BatchNorm2d(128),
@@ -212,7 +214,7 @@ class Discriminator(nn.Module):
             return block
 
         self.model = nn.Sequential(
-            *discriminator_block(opt.channels, 16, alpha_in=0, bn=False),
+            *discriminator_block(channels, 16, alpha_in=0, bn=False),
             *discriminator_block(16, 32),
             *discriminator_block(32, 64),
             *discriminator_block(64, 128, alpha_out=0),
