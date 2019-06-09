@@ -190,7 +190,7 @@ class Generator(nn.Module):
             OctaveConv(128, 64, 3, stride=1, padding=1),
             dual_channel_batchnorm2d(64, 0.8),
             dual_channel_leakyrelu(0.2, inplace=True),
-            OctaveConv(64, opt.channels, 3, stride=1, padding=1, alpha_out = 0),
+            OctaveConv(64, channels, 3, stride=1, padding=1, alpha_out = 0),
             high_channel_tanh(),
         )
 
@@ -221,7 +221,7 @@ class Discriminator(nn.Module):
         )
 
         # The height and width of downsampled image
-        ds_size = opt.img_size // 2 ** 4
+        ds_size = img_size // 2 ** 4
         self.adv_layer = nn.Sequential(nn.Linear(128 * ds_size ** 2, 1), nn.Sigmoid())
 
     def forward(self, img):
