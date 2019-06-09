@@ -27,4 +27,10 @@ python3 demo_dcgan.py \
 --outf <output_folder> \
 --sampleSize 2000
 ```
-![demo](demo.gif)
+!python3 demo_dcgan.py \
+--dataset cifar10 \
+--dataroot input_data \
+--cuda \
+--batch_size 16 \
+--outf output_data \
+--sampleSize 2000
