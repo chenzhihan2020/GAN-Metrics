@@ -80,8 +80,9 @@ def sampleFake(netG, nz, sampleSize, batchSize, saveFolder):
         os.makedirs(saveFolder)
     except OSError:
         pass
-
-    noise = torch.FloatTensor(batchSize, nz, 1, 1).cuda()
+    
+    noise = torch.FloatTensor(np.random.normal(0, 1, (batchSize, nz))).cuda()
+#   noise = torch.FloatTensor(batchSize, nz, 1, 1).cuda()
     iter = 0
     for i in range(0, 1 + sampleSize // batchSize):
         noise.data.normal_(0, 1)

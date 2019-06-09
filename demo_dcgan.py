@@ -11,6 +11,8 @@ import torch.utils.data
 import torchvision.datasets as dset
 import torchvision.transforms as transforms
 import torchvision.utils as vutils
+from torch.autograd import Variable
+
 
 import metric
 from metric import make_dataset
@@ -27,7 +29,7 @@ if __name__ == '__main__':
     parser.add_argument('--dataroot', required=True, help='path to dataset')
     parser.add_argument('--workers', type=int, help='number of data loading workers', default=4)
     parser.add_argument('--batchSize', type=int, default=64, help='input batch size')
-    parser.add_argument('--imageSize', type=int, default=64, help='the height / width of the input image to network')
+    parser.add_argument('--imageSize', type=int, default=32, help='the height / width of the input image to network')
     parser.add_argument('--nz', type=int, default=100, help='size of the latent z vector')
     parser.add_argument('--ngf', type=int, default=64)
     parser.add_argument('--ndf', type=int, default=64)
@@ -76,8 +78,8 @@ if __name__ == '__main__':
     #########################
     #### Models building ####
     #########################
-    ##device = torch.device("cuda:0" if opt.cuda else "cpu")
-    device = torch.device("cpu")
+    device = torch.device("cuda:0" if opt.cuda else "cpu")
+    ##device = torch.device("cpu")
     ngpu = int(opt.ngpu)
     nz = int(opt.nz)
     ngf = int(opt.ngf)
@@ -97,8 +99,10 @@ if __name__ == '__main__':
     print(netD)
 
     criterion = nn.BCELoss()
-
-    fixed_noise = torch.randn(opt.batchSize, nz, 1, 1, device=device)
+    Tensor=torch.FloatTensor
+    z = Variable(Tensor(np.random.normal(0, 1, (opt.batchSize, opt.nz))).to(device))
+    fixed_noise=z
+#   fixed_noise = torch.randn(opt.batchSize, nz, 1, 1, device=device)
     real_label = 1
     fake_label = 0
 
@@ -135,7 +139,8 @@ if __name__ == '__main__':
             D_x = output.mean().item()
 
             # train with fake
-            noise = torch.randn(batch_size, nz, 1, 1, device=device)
+            noise = Tensor(np.random.normal(0 , 1, (opt.batchSize, opt.nz))).to(device)
+            #noise = torch.randn(batch_size, nz, 1, 1, device=device)
             fake = netG(noise)
             label.fill_(fake_label)
             output = netD(fake.detach())
