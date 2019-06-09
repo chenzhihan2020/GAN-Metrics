@@ -26,12 +26,28 @@ python3 demo_dcgan.py \
 --dataroot <data_folder> \
 --outf <output_folder> \
 --sampleSize 2000
-```
+'''
+run original dcgan:
+'''
+python3 dcgan_eval.py \
+--dataset cifar10 \
+--dataroot input_data \
+--cuda \
+--batchSize 16 \
+--niter 200 \
+--outf output_dcgan \
+--sampleSize 1000
+'''
+
+run dcgan with gd:
+'''
 python3 demo_dcgan.py \
 --dataset cifar10 \
 --dataroot input_data \
 --cuda \
---batchSize 64 \
+--batchSize 16 \
 --niter 200 \
 --outf output_dcgan_gd \
 --sampleSize 1000
+'''
+
