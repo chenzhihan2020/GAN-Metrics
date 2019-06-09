@@ -76,6 +76,7 @@ if __name__ == '__main__':
     #########################
     #### Models building ####
     #########################
+    ##device = torch.device("cuda:0" if opt.cuda else "cpu")
     device = torch.device("cuda:0" if opt.cuda else "cpu")
     ngpu = int(opt.ngpu)
     nz = int(opt.nz)
