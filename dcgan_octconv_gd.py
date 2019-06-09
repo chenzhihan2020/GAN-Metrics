@@ -21,7 +21,7 @@ os.makedirs("models", exist_ok=True)
 
 latent_dim=100
 channels=3
-image_size=3.2
+img_size=3.2
 
 
 #cuda = True if torch.cuda.is_available() else False
