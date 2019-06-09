@@ -31,6 +31,7 @@ python3 demo_dcgan.py \
 --dataset cifar10 \
 --dataroot input_data \
 --cuda \
---batch_size 16 \
---outf output_data \
---sampleSize 2000
+--batchSize 64 \
+--niter 200 \
+--outf output_dcgan_gd \
+--sampleSize 1000
