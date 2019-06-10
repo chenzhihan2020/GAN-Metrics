@@ -54,11 +54,11 @@ if __name__ == '__main__':
     ## import GAN model
     if(opt.inputmodel=='dcgan'):
         import dcgan as inputmodel
-    elif(opt.inputmodel=='dcgan_octconv_g'):
+    if(opt.inputmodel=='dcgan_octconv_g'):
         import dcgan_octconv_g as inputmodel
-    elif(opt.inputmodel=='dcgan_octconv_gd'):
+    if(opt.inputmodel=='dcgan_octconv_gd'):
         import dcgan_octconv_gd as inputmodel
-    elif(opt.inputmodel=='dragan_gd'):
+    if(opt.inputmodel=='dragan_gd'):
         import dcgan_gd as inputmodel
     
     try:
