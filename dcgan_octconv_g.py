@@ -32,7 +32,7 @@ channels=3
 img_size=32
 
 
-def weights_init_normal(m):
+def weights_init(m):
     classname = m.__class__.__name__
     
     if classname.find("OctaveConv") != -1:
