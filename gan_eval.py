@@ -143,7 +143,7 @@ if __name__ == '__main__':
             netD.zero_grad()
             real_cpu = data[0].to(device)
             batch_size = real_cpu.size(0)
-            label = torch.full((opt.batchSize,), real_label, device=device)
+            label = torch.full((batch_size,), real_label, device=device)
 
             output = netD(real_cpu)
             errD_real = criterion(output, label)
@@ -151,7 +151,7 @@ if __name__ == '__main__':
             D_x = output.mean().item()
 
             # train with fake
-            noise = Tensor(np.random.normal(0 , 1, (opt.batchSize, opt.nz))).to(device)
+            noise = Tensor(np.random.normal(0 , 1, (batch_size, opt.nz))).to(device)
             #noise = torch.randn(batch_size, nz, 1, 1, device=device)
             fake = netG(noise)
             label.fill_(fake_label)
