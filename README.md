@@ -34,7 +34,7 @@ python3 gan_eval.py \
 --outf output_$model_name$ \
 --sampleSize 1000
 '''
-
+examples:
 python3 gan_eval.py \
 --dataset cifar10 \
 --dataroot input_data \
