@@ -143,7 +143,7 @@ if __name__ == '__main__':
             netD.zero_grad()
             real_cpu = data[0].to(device)
             batch_size = real_cpu.size(0)
-            label = torch.full((batch_size,), real_label, device=device)
+            label = torch.full((data.shape[0],), real_label, device=device)
 
             output = netD(real_cpu)
             errD_real = criterion(output, label)
