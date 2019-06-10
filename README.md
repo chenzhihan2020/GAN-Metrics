@@ -40,6 +40,7 @@ python3 dcgan_eval.py \
 '''
 
 run dcgan with gd:
+
 '''
 python3 demo_dcgan.py \
 --dataset cifar10 \
@@ -51,3 +52,26 @@ python3 demo_dcgan.py \
 --sampleSize 1000
 '''
 
+run model:
+($model_name$=dcgan,dcgan_octconv_gd,dcgan_octconv_g)
+'''
+python3 gan_eval.py \
+--dataset cifar10 \
+--dataroot input_data \
+--cuda \
+--batchSize 16 \
+--niter 200 \
+--inputmodel $model_name$ \
+--outf output_$model_name$ \
+--sampleSize 1000
+'''
+
+python3 gan_eval.py \
+--dataset cifar10 \
+--dataroot input_data \
+--cuda \
+--batchSize 16 \
+--niter 200 \
+--inputmodel dcgan_octconv_g \
+--outf output_dcgan_octconv_g \
+--sampleSize 1000
