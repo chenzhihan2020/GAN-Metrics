@@ -20,37 +20,6 @@ In the demo, final metrics scores of all epoches will be scored in `<outf>/score
 - If you want to compute metrics of your own images, you have to modify the codes of function `compute_score_raw()` in `metric.py` by yourself :)
 
 ```
-python3 demo_dcgan.py \
---dataset cifar10 \
---cuda \
---dataroot <data_folder> \
---outf <output_folder> \
---sampleSize 2000
-'''
-run original dcgan:
-'''
-python3 dcgan_eval.py \
---dataset cifar10 \
---dataroot input_data \
---cuda \
---batchSize 16 \
---niter 200 \
---outf output_dcgan \
---sampleSize 1000
-'''
-
-run dcgan with gd:
-
-'''
-python3 demo_dcgan.py \
---dataset cifar10 \
---dataroot input_data \
---cuda \
---batchSize 16 \
---niter 200 \
---outf output_dcgan_gd \
---sampleSize 1000
-'''
 
 run model:
 ($model_name$=dcgan,dcgan_octconv_gd,dcgan_octconv_g,dcgan_octconv_d)
