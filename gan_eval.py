@@ -52,7 +52,14 @@ if __name__ == '__main__':
     print(opt)
     
     ## import GAN model
-    import opt.inputmodel as inputmodel
+    if(opt.inputmodel=='dcgan'):
+        import dcgan as inputmodel
+    elif(opt.inputmodel=='dcgan_octconv_g'):
+        import dcgan_octconv_g as inputmodel
+    elif(opt.inputmodel=='dcgan_octconv_gd'):
+        import dcgan_octconv_gd as inputmodel
+    elif(opt.inputmodel=='dragan_gd'):
+        import dcgan_gd as inputmodel
     
     try:
         os.makedirs(opt.outf)
