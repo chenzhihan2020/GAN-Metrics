@@ -97,6 +97,7 @@ def compute_gradient_penalty(D, X):
     """Calculates the gradient penalty loss for DRAGAN"""
     # Random weight term for interpolation
     alpha = Tensor(np.random.random(size=X.shape))
+    X=Tensor(X)
 
     interpolates = alpha * X + \
                    ((1 - alpha) * (X + 0.5 * X.std() * Tensor(torch.rand(X.size()))))
