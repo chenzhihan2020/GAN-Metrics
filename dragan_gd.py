@@ -236,7 +236,7 @@ adversarial_loss = torch.nn.BCELoss()
 lambda_gp = 10
 
 
-Tensor = torch.FloatTensor
+Tensor = torch.cuda.FloatTensor
 
 
 def compute_gradient_penalty(D, X):
