@@ -55,13 +55,33 @@ python3 gan_eval.py \
 --outf output_dcgan_octconv_d \
 --sampleSize 1000
 
+python3 gan_eval.py \
+--dataset cifar10 \
+--dataroot input_data \
+--cuda \
+--batchSize 64 \
+--niter 100 \
+--inputmodel dcgan_octconv_gd \
+--outf output_dcgan_octconv_gd \
+--sampleSize 1000
+
+python3 gan_eval.py \
+--dataset cifar10 \
+--dataroot input_data \
+--cuda \
+--batchSize 64 \
+--niter 100 \
+--inputmodel dragan \
+--outf output_dragan \
+--sampleSize 1000
+
 examples:
 python3 gan_eval.py \
 --dataset cifar10 \
 --dataroot input_data \
 --cuda \
 --batchSize 64 \
---niter 200 \
---inputmodel dcgan_octconv_gd \
---outf output_dcgan_octconv_gd \
+--niter 100 \
+--inputmodel dragan_gd \
+--outf output_dragan_gd \
 --sampleSize 1000
