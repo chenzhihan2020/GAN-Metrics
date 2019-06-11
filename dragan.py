@@ -90,7 +90,7 @@ class Discriminator(nn.Module):
 lambda_gp = 10
 
 
-Tensor = torch.FloatTensor #if cuda else torch.FloatTensor
+Tensor = torch.cuda.FloatTensor #if cuda else torch.FloatTensor
 
 
 def compute_gradient_penalty(D, X):
