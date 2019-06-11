@@ -99,7 +99,7 @@ def compute_gradient_penalty(D, X):
     alpha = Tensor(np.random.random(size=X.shape))
 
     interpolates = alpha * X + \
-                   ((1 - alpha) * (X + 0.5 * X.std() * Tensor(torch.rand(X.size())))))
+                   ((1 - alpha) * (X + 0.5 * X.std() * Tensor(torch.rand(X.size()))))
     interpolates = Variable(interpolates, requires_grad=True)
 
     d_interpolates = D(interpolates)
