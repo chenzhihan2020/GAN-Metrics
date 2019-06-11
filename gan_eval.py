@@ -146,7 +146,7 @@ if __name__ == '__main__':
             #if(opt.inputmodel=='dragan' or opt.inputmodel=='dragan_gd'):
             #    real_cpu = Variable(data[0].type(torch.cuda.FloatTensor))
             #else:
-            real_cpu = data[0].type(torch.FloatTensor)to(device)
+            real_cpu = data[0].type(torch.FloatTensor).to(device)
             batch_size = real_cpu.size(0)
             label = torch.full((batch_size,), real_label, device=device)
 
