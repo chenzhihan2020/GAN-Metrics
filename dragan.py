@@ -90,14 +90,14 @@ class Discriminator(nn.Module):
 lambda_gp = 10
 
 
-Tensor = torch.FloatTensor #if cuda else torch.FloatTensor
+Tensor = torch.cuda.FloatTensor #if cuda else torch.FloatTensor
 
 
 def compute_gradient_penalty(D, X):
     """Calculates the gradient penalty loss for DRAGAN"""
     # Random weight term for interpolation
     alpha = Tensor(np.random.random(size=X.shape))
-    X=X.type(torch.FloatTensor)
+    #X=X.type(torch.FloatTensor)
 
     interpolates = alpha * X + \
                    ((1 - alpha) * (X + 0.5 * X.std() * \
