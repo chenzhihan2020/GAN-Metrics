@@ -170,6 +170,7 @@ if __name__ == '__main__':
             if(opt.inputmodel=='dragan' or opt.inputmodel=='dragan_gd'):
                 grad_penalty = inputmodel.compute_gradient_penalty(netD, real_cpu.data)
             grad_penalty.backward()
+            errD.backward()
             optimizerD.step()
 
             ############################
