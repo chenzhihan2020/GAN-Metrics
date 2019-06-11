@@ -64,6 +64,8 @@ if __name__ == '__main__':
         import dragan_gd as inputmodel
     if(opt.inputmodel=='dragan'):
         import dragan as inputmodel
+    if(opt.inputmodel=='dragan_g'):
+        import dragan_g as inputmodel    
     
     try:
         os.makedirs(opt.outf)
@@ -169,7 +171,7 @@ if __name__ == '__main__':
             D_G_z1 = output.mean().item()
             errD = (errD_real + errD_fake) / 2
             errD.backward()
-            if(opt.inputmodel=='dragan' or opt.inputmodel=='dragan_gd'):
+            if(opt.inputmodel=='dragan' or opt.inputmodel=='dragan_gd' or opt.inputmodel=='dragan_g'):
                 grad_penalty = inputmodel.compute_gradient_penalty(netD, real_cpu.data)
                 grad_penalty.backward()
             optimizerD.step()
