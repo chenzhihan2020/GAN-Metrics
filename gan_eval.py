@@ -132,7 +132,7 @@ if __name__ == '__main__':
                                  netG, opt.nz, conv_model='inception_v3', workers=int(opt.workers))
     score_tr[0] = s
     np.save('%s/score_tr.npy' % (opt.outf), score_tr)
-
+    torch.autograd.set_detect_anomaly(True)
     #########################
     #### Models training ####
     #########################
@@ -170,7 +170,7 @@ if __name__ == '__main__':
             errD = (errD_real + errD_fake) / 2
             errD.backward()
             optimizerD.step()
-
+    
             ############################
             # (2) Update G network: maximize log(D(G(z)))
             ###########################
