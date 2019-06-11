@@ -169,7 +169,7 @@ if __name__ == '__main__':
             #    errD = inputmodel.compute_gradient_penalty(netD, real_cpu.data)
             #else:
             errD = (errD_real + errD_fake) / 2
-            errD.backward()
+            #errD.backward()
             optimizerD.step()
     
             ############################
