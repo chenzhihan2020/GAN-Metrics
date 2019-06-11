@@ -236,7 +236,7 @@ adversarial_loss = torch.nn.BCELoss()
 lambda_gp = 10
 
 
-Tensor = torch.FloatTensor
+Tensor = torch.cuda.FloatTensor
 
 
 def compute_gradient_penalty(D, X):
@@ -244,7 +244,7 @@ def compute_gradient_penalty(D, X):
     # Random weight term for interpolation
     alpha = Tensor(np.random.random(size=X.shape))
 
-    interpolates = alpha * X + ((1 - alpha) * (X + 0.5 * X.std() * torch.rand(X.size())))
+    interpolates = alpha * X + ((1 - alpha) * (X + 0.5 * X.std() * torch.rand(X.size()).type(Tensor)))
     interpolates = Variable(interpolates, requires_grad=True)
 
     d_interpolates = D(interpolates)
