@@ -144,7 +144,7 @@ if __name__ == '__main__':
             # train with real
             netD.zero_grad()
             if(opt.inputmodel=='dragan' or opt.inputmodel=='dragan_gd'):
-                real_cpu = Variable(data[0].type(torch.cuda.FloatTensor))
+                real_cpu = data[0].type(torch.FloatTensor).to(device)
             else:
                 real_cpu = data[0].type(torch.FloatTensor).to(device)
             batch_size = real_cpu.size(0)
