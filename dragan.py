@@ -96,7 +96,7 @@ Tensor = torch.cuda.FloatTensor #if cuda else torch.FloatTensor
 def compute_gradient_penalty(D, X):
     """Calculates the gradient penalty loss for DRAGAN"""
     # Random weight term for interpolation
-    alpha = Tensor(np.random.random(size=X.shape))
+    alpha = np.random.random(size=X.shape).Type(Tensor)
     #X=X.type(torch.FloatTensor)
 
     interpolates = alpha * X + \
