@@ -40,7 +40,7 @@ python3 gan_eval.py \
 --dataroot input_data \
 --cuda \
 --batchSize 64 \
---niter 200 \
+--niter 100 \
 --inputmodel dcgan_octconv_g \
 --outf output_dcgan_octconv_g \
 --sampleSize 1000
@@ -50,7 +50,7 @@ python3 gan_eval.py \
 --dataroot input_data \
 --cuda \
 --batchSize 64 \
---niter 200 \
+--niter 100 \
 --inputmodel dcgan_octconv_d \
 --outf output_dcgan_octconv_d \
 --sampleSize 1000
