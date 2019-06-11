@@ -62,6 +62,8 @@ if __name__ == '__main__':
         import dcgan_octconv_gd as inputmodel
     if(opt.inputmodel=='dragan_gd'):
         import dcgan_gd as inputmodel
+    if(opt.inputmodel=='dragan'):
+        import dcgan as inputmodel
     
     try:
         os.makedirs(opt.outf)
