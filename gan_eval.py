@@ -144,7 +144,7 @@ if __name__ == '__main__':
             # train with real
             netD.zero_grad()
             if(opt.inputmodel=='dragan' or opt.inputmodel=='dragan_gd'):
-                real_cpu = data[0].type(torch.FloatTensor).to(device)
+                real_cpu = Varaiable(data[0].type(torch.FloatTensor))
             else:
                 real_cpu = data[0].type(torch.FloatTensor).to(device)
             batch_size = real_cpu.size(0)
@@ -152,7 +152,7 @@ if __name__ == '__main__':
 
             output = netD(real_cpu)
             errD_real = criterion(output, label)
-            errD_real.backward()
+            #errD_real.backward()
             D_x = output.mean().item()
 
             # train with fake
@@ -163,14 +163,14 @@ if __name__ == '__main__':
             # label.fill_(fake_label)
             output = netD(fake.detach())
             errD_fake = criterion(output, label)
-            errD_fake.backward()
+            #errD_fake.backward()
             
             D_G_z1 = output.mean().item()
             if(opt.inputmodel=='dragan' or opt.inputmodel=='dragan_gd'):
                 errD = inputmodel.compute_gradient_penalty(netD, real_cpu.data)
             else:
                 errD = (errD_real + errD_fake) / 2
-            #errD.backward()
+            errD.backward()
             optimizerD.step()
 
             ############################
