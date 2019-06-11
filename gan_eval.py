@@ -166,11 +166,10 @@ if __name__ == '__main__':
             #errD_fake.backward()
             
             D_G_z1 = output.mean().item()
+            errD = (errD_real + errD_fake) / 2
             if(opt.inputmodel=='dragan' or opt.inputmodel=='dragan_gd'):
-                errD = inputmodel.compute_gradient_penalty(netD, real_cpu.data)
-            else:
-                errD = (errD_real + errD_fake) / 2
-            errD.backward()
+                grad_penalty = inputmodel.compute_gradient_penalty(netD, real_cpu.data)
+            grad_penalty.backward()
             optimizerD.step()
 
             ############################
