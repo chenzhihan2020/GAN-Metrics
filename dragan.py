@@ -87,7 +87,7 @@ class Discriminator(nn.Module):
 
 
 # Loss weight for gradient penalty
-lambda_gp = 10
+lambda_gp = 2
 
 
 Tensor = torch.cuda.FloatTensor #if cuda else torch.FloatTensor
