@@ -167,7 +167,7 @@ if __name__ == '__main__':
             
             D_G_z1 = output.mean().item()
             if(opt.inputmodel=='dragan' or opt.inputmodel=='dragan_gd'):
-                errD = inputmodel.compute_gradient_penalty(netD, real_cpu.detach())
+                errD = inputmodel.compute_gradient_penalty(netD, real_cpu.data)
             else:
                 errD = (errD_real + errD_fake) / 2
             errD.backward()
