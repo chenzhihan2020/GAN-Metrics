@@ -148,7 +148,7 @@ if __name__ == '__main__':
             else:
                 real_cpu = data[0].type(torch.FloatTensor).to(device)
             batch_size = real_cpu.size(0)
-            label = torch.full((batch_size,), real_label, device=device)
+            label = torch.full((batch_size,1), real_label, device=device)
 
             output = netD(real_cpu)
             errD_real = criterion(output, label)
@@ -159,7 +159,8 @@ if __name__ == '__main__':
             noise = Tensor(np.random.normal(0 , 1, (batch_size, opt.nz))).to(device)
             #noise = torch.randn(batch_size, nz, 1, 1, device=device)
             fake = netG(noise)
-            label.fill_(fake_label)
+            label = torch.full((batch_size,1), fake_label, device=device)
+            # label.fill_(fake_label)
             output = netD(fake.detach())
             errD_fake = criterion(output, label)
             errD_fake.backward()
