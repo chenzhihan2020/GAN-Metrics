@@ -128,11 +128,12 @@ if __name__ == '__main__':
     score_tr = np.zeros((opt.niter, 4*7+3))
 
     # compute initial score
+    
     s = metric.compute_score_raw(opt.dataset, opt.imageSize, opt.dataroot, opt.sampleSize, 16, opt.outf+'/real/', opt.outf+'/fake/',
                                  netG, opt.nz, conv_model='inception_v3', workers=int(opt.workers))
     score_tr[0] = s
     np.save('%s/score_tr.npy' % (opt.outf), score_tr)
-
+    
     #########################
     #### Models training ####
     #########################
@@ -167,10 +168,10 @@ if __name__ == '__main__':
             
             D_G_z1 = output.mean().item()
             errD = (errD_real + errD_fake) / 2
+            errD.backward()
             if(opt.inputmodel=='dragan' or opt.inputmodel=='dragan_gd'):
                 grad_penalty = inputmodel.compute_gradient_penalty(netD, real_cpu.data)
-            grad_penalty.backward()
-            errD.backward()
+                grad_penalty.backward()
             optimizerD.step()
 
             ############################
