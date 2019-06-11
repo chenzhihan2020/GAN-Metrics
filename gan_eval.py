@@ -147,7 +147,7 @@ if __name__ == '__main__':
 
             output = netD(real_cpu)
             errD_real = criterion(output, label)
-            errD_real.backward()
+
             D_x = output.mean().item()
 
             # train with fake
@@ -157,9 +157,13 @@ if __name__ == '__main__':
             label.fill_(fake_label)
             output = netD(fake.detach())
             errD_fake = criterion(output, label)
-            errD_fake.backward()
+
             D_G_z1 = output.mean().item()
-            errD = errD_real + errD_fake
+            if(opt.inputmodel=='dragan' or opt.inputmodel=='dragan_gd'):
+                errD = inputmodel.compute_gradient_penalty(netD, real_cpu.data)
+            else:
+                errD = (errD_real + errD_fake) / 2
+            errD.backward()
             optimizerD.step()
 
             ############################
@@ -168,7 +172,7 @@ if __name__ == '__main__':
             netG.zero_grad()
             label.fill_(real_label)  # fake labels are real for generator cost
             output = netD(fake)
-            errG = criterion(output, label)
+            errG = criterion(output, label)           
             errG.backward()
             D_G_z2 = output.mean().item()
             optimizerG.step()
