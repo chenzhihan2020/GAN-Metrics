@@ -73,7 +73,7 @@ python3 gan_eval.py \
 --niter 100 \
 --inputmodel dragan \
 --outf output_dragan \
---sampleSize 1000
+--sampleSize 2000
 
 examples:
 python3 gan_eval.py \
@@ -84,4 +84,4 @@ python3 gan_eval.py \
 --niter 100 \
 --inputmodel dragan_gd \
 --outf output_dragan_gd \
---sampleSize 1000
+--sampleSize 2000
