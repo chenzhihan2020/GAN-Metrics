@@ -19,7 +19,7 @@ latent_dim=100
 channels=3
 img_size=32
 
-def weights_init_normal(m):
+def weights_init(m):
     classname = m.__class__.__name__
     if classname.find("Conv") != -1:
         torch.nn.init.normal_(m.weight.data, 0.0, 0.02)
@@ -90,7 +90,7 @@ class Discriminator(nn.Module):
 lambda_gp = 10
 
 
-Tensor = torch.cuda.FloatTensor #if cuda else torch.FloatTensor
+Tensor = torch.FloatTensor #if cuda else torch.FloatTensor
 
 
 def compute_gradient_penalty(D, X):
