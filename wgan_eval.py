@@ -180,7 +180,7 @@ if __name__ == '__main__':
             if i % opt.n_critic == 0:
                 fake = netG(noise)
                 #label.fill_(real_label)  # fake labels are real for generator cost
-                output = netD(fake)
+                output = netD(fake.detach())
                 # Adversarial loss
                 errG = -torch.mean(output)
                 errG.backward()          
