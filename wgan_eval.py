@@ -18,13 +18,12 @@ import metric
 from metric import make_dataset
 import numpy as np
 
-## import GAN model
-import dcgan as inputmodel
-
 
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
+    parser.add_argument('--inputmodel', required=True, help='GAN model to evaluate')
+    
     parser.add_argument('--dataset', required=True, help='cifar10 | lsun | imagenet | folder | lfw | fake')
     parser.add_argument('--dataroot', required=True, help='path to dataset')
     parser.add_argument('--workers', type=int, help='number of data loading workers', default=4)
@@ -42,15 +41,33 @@ if __name__ == '__main__':
     parser.add_argument('--netD', default='', help="path to netD (to continue training)")
     parser.add_argument('--outf', default='results', help='folder to output images and model checkpoints')
     parser.add_argument('--manualSeed', type=int, help='manual seed')
-
+    parser.add_argument("--n_critic", type=int, default=5, help="number of training steps for discriminator per iter")
+    parser.add_argument("--clip_value", type=float, default=0.01, help="lower and upper clip value for disc. weights")
     ########################################################
     #### For evaluation ####
     parser.add_argument('--sampleSize', type=int, default=2000, help='number of samples for evaluation')
     ########################################################
 
+    
     opt = parser.parse_args()
     print(opt)
-
+    
+    ## import GAN model
+    if(opt.inputmodel=='dcgan'):
+        import dcgan as inputmodel
+    if(opt.inputmodel=='dcgan_octconv_d'):
+        import dcgan_octconv_d as inputmodel
+    if(opt.inputmodel=='dcgan_octconv_g'):
+        import dcgan_octconv_g as inputmodel
+    if(opt.inputmodel=='dcgan_octconv_gd'):
+        import dcgan_octconv_gd as inputmodel
+    if(opt.inputmodel=='dragan_gd'):
+        import dragan_gd as inputmodel
+    if(opt.inputmodel=='dragan'):
+        import dragan as inputmodel
+    if(opt.inputmodel=='dragan_g'):
+        import dragan_g as inputmodel    
+    
     try:
         os.makedirs(opt.outf)
     except OSError:
@@ -114,11 +131,12 @@ if __name__ == '__main__':
     score_tr = np.zeros((opt.niter, 4*7+3))
 
     # compute initial score
+    
     s = metric.compute_score_raw(opt.dataset, opt.imageSize, opt.dataroot, opt.sampleSize, 16, opt.outf+'/real/', opt.outf+'/fake/',
                                  netG, opt.nz, conv_model='inception_v3', workers=int(opt.workers))
     score_tr[0] = s
     np.save('%s/score_tr.npy' % (opt.outf), score_tr)
-
+    
     #########################
     #### Models training ####
     #########################
@@ -129,37 +147,45 @@ if __name__ == '__main__':
             ###########################
             # train with real
             netD.zero_grad()
-            real_cpu = data[0].to(device)
+            real_cpu = data[0].type(torch.FloatTensor).to(device)
             batch_size = real_cpu.size(0)
-            label = torch.full((batch_size,), real_label, device=device)
+            label = torch.full((batch_size,1), real_label, device=device)
 
-            output = netD(real_cpu)
-            errD_real = criterion(output, label)
-            errD_real.backward()
-            D_x = output.mean().item()
+            errD_real = netD(real_cpu)
+
+            #errD_real.backward()
+            D_x = errD_real.mean().item()
 
             # train with fake
-            noise = Tensor(np.random.normal(0 , 1, (opt.batchSize, opt.nz))).to(device)
+            noise = Tensor(np.random.normal(0 , 1, (batch_size, opt.nz))).to(device)
             #noise = torch.randn(batch_size, nz, 1, 1, device=device)
             fake = netG(noise)
-            label.fill_(fake_label)
-            output = netD(fake.detach())
-            errD_fake = criterion(output, label)
-            errD_fake.backward()
-            D_G_z1 = output.mean().item()
-            errD = errD_real + errD_fake
+            label = torch.full((batch_size,1), fake_label, device=device)
+            # label.fill_(fake_label)
+            errD_fake = netD(fake.detach())
+            #errD_fake = criterion(output, label)
+            #errD_fake.backward()
+            
+            D_G_z1 = errD_fake.mean().item()
+            errD = -torch.mean(errD_real) +torch.mean(errD_fake)
+            errD.backward()
+
             optimizerD.step()
 
             ############################
             # (2) Update G network: maximize log(D(G(z)))
             ###########################
-            netG.zero_grad()
-            label.fill_(real_label)  # fake labels are real for generator cost
-            output = netD(fake)
-            errG = criterion(output, label)
-            errG.backward()
-            D_G_z2 = output.mean().item()
-            optimizerG.step()
+            for p in netD.parameters():
+                p.data.clamp_(-opt.clip_value, opt.clip_value)
+            if i % opt.n_critic == 0:
+                fake = netG(noise)
+                #label.fill_(real_label)  # fake labels are real for generator cost
+                output = netD(fake)
+                # Adversarial loss
+                errG = -torch.mean(output)
+                errG.backward()          
+                D_G_z2 = output.mean().item()
+                optimizerG.step()
 
             if i % 10 == 0:
                 print('[%d/%d][%d/%d] Loss_D: %.4f Loss_G: %.4f D(x): %.4f D(G(z)): %.4f / %.4f'
@@ -184,8 +210,11 @@ if __name__ == '__main__':
         s = metric.compute_score_raw(opt.dataset, opt.imageSize, opt.dataroot, opt.sampleSize, opt.batchSize, opt.outf+'/real/', opt.outf+'/fake/',\
                                      netG, opt.nz, conv_model='inception_v3', workers=int(opt.workers))
         score_tr[epoch] = s
+        if(epoch==100):
+            np.save('%s/score_tr_ep_100.npy' % opt.outf, score_tr)
 
     # save final metric scores of all epoches
     np.save('%s/score_tr_ep.npy' % opt.outf, score_tr)
     print('##### training completed :) #####')
     print('### metric scores output is scored at %s/score_tr_ep.npy ###' % opt.outf)
+
