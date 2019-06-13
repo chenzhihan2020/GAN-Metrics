@@ -55,7 +55,7 @@ if __name__ == '__main__':
     if(opt.inputmodel=='dcgan'):
         import dcgan as inputmodel
     if(opt.inputmodel=='dcgan_g_0.8_0.2'):
-        import dcgan_g_0.8_0.2 as inputmodel
+        import dcgan_g_8_2 as inputmodel
     if(opt.inputmodel=='dcgan_octconv_d'):
         import dcgan_octconv_d as inputmodel
     if(opt.inputmodel=='dcgan_octconv_g'):
