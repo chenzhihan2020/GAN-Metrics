@@ -31,7 +31,7 @@ latent_dim=100
 channels=3
 img_size=32
 in_w=0.8
-out_w=0.8
+out_w=0.5
 
 def weights_init(m):
     classname = m.__class__.__name__
