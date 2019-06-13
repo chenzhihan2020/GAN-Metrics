@@ -54,7 +54,7 @@ if __name__ == '__main__':
     ## import GAN model
     if(opt.inputmodel=='dcgan'):
         import dcgan as inputmodel
-    if(opt.inputmodel=='dcgan_g_0.8_0.2'):
+    if(opt.inputmodel=='dcgan_g_8_2'):
         import dcgan_g_8_2 as inputmodel
     if(opt.inputmodel=='dcgan_octconv_d'):
         import dcgan_octconv_d as inputmodel
