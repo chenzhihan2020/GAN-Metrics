@@ -91,8 +91,8 @@ python3 gan_eval.py \
 --cuda \
 --batchSize 64 \
 --niter 200 \
---inputmodel dcgan_g_0.8_0.2 \
---outf output_dcgan_g_0.8_0.2 \
+--inputmodel dcgan_g_8_2 \
+--outf output_dcgan_g_8_2 \
 --sampleSize 1000
 
 run wgan:
