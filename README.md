@@ -85,6 +85,16 @@ python3 gan_eval.py \
 --outf output_dragan_gd \
 --sampleSize 2000
 
+python3 gan_eval.py \
+--dataset cifar10 \
+--dataroot input_data \
+--cuda \
+--batchSize 64 \
+--niter 200 \
+--inputmodel dcgan_g_0.8_0.2 \
+--outf output_dcgan_g_0.8_0.2 \
+--sampleSize 1000
+
 run wgan:
 python3 wgan_eval.py \
 --dataset cifar10 \
