@@ -179,10 +179,10 @@ class Generator(nn.Module):
             dual_channel_batchnorm2d(128, 0.8,alpha=out_w),
             dual_channel_leakyrelu(0.2, inplace=True),
             dual_channel_upsample(scale_factor=2),
-            OctaveConv(128, 64, 3, stride=1, padding=1,alpha_in=out_w, alpha_out=in_w),
-            dual_channel_batchnorm2d(64, 0.8,alpha=in_w),
+            OctaveConv(128, 64, 3, stride=1, padding=1,alpha_in=out_w, alpha_out=out_w),
+            dual_channel_batchnorm2d(64, 0.8,alpha=out_w),
             dual_channel_leakyrelu(0.2, inplace=True),
-            OctaveConv(64, channels, 3, stride=1, padding=1,alpha_in=in_w, alpha_out = 0),
+            OctaveConv(64, channels, 3, stride=1, padding=1,alpha_in=out_w, alpha_out = 0),
             high_channel_tanh(),
         )
 
