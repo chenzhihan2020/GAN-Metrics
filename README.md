@@ -1,6 +1,9 @@
 # GAN Metrics
 
-This repository provides the code for [An empirical study on evaluation metrics of generative adversarial networks](https://arxiv.org/abs/1806.07755).
+This repository provides the code for octave conlution in GAN and evaluation.
+Evalution code is modified from https://github.com/xuqiantong/GAN-Metrics
+Original DCGAN code is from https://github.com/eriklindernoren/PyTorch-GAN/blob/master/implementations/dcgan/dcgan.py
+We implemented octave convolution in DCGAN and modified evaluation on different GANs.
 
 Requirement
 ------
@@ -14,15 +17,13 @@ Requirement
 
 Usage
 ------
-
-- We create a demo for DCGAN training as well as computing all the metrics after each epoch.     
-In the demo, final metrics scores of all epoches will be scored in `<outf>/score_tr_ep.npy`    
-- If you want to compute metrics of your own images, you have to modify the codes of function `compute_score_raw()` in `metric.py` by yourself :)
+dcgan.py,dcgan_octconv_gd, etc. define the generator and discriminator of GAN.
+gan_eval.py calculate evaluation metrics of GAN while training it. 
 
 ```
 
-run model:
-($model_name$=dcgan,dcgan_octconv_gd,dcgan_octconv_g,dcgan_octconv_d)
+run:
+($model_name$=dcgan,dcgan_octconv_gd,dcgan_octconv_g,etc.)
 '''
 python3 gan_eval.py \
 --dataset cifar10 \
@@ -32,8 +33,9 @@ python3 gan_eval.py \
 --niter 200 \
 --inputmodel $model_name$ \
 --outf output_$model_name$ \
---sampleSize 2000
+--sampleSize 1000
 '''
+
 examples:
 python3 gan_eval.py \
 --dataset cifar10 \
@@ -43,7 +45,7 @@ python3 gan_eval.py \
 --niter 200 \
 --inputmodel dcgan_octconv_g \
 --outf output_dcgan_octconv_g \
---sampleSize 2000
+--sampleSize 1000
 
 python3 gan_eval.py \
 --dataset cifar10 \
@@ -53,7 +55,7 @@ python3 gan_eval.py \
 --niter 200 \
 --inputmodel dcgan_octconv_d \
 --outf output_dcgan_octconv_d \
---sampleSize 2000
+--sampleSize 1000
 
 python3 gan_eval.py \
 --dataset cifar10 \
@@ -63,7 +65,7 @@ python3 gan_eval.py \
 --niter 200 \
 --inputmodel dcgan_octconv_gd \
 --outf output_dcgan_octconv_gd \
---sampleSize 2000
+--sampleSize 1000
 
 python3 gan_eval.py \
 --dataset cifar10 \
@@ -73,7 +75,7 @@ python3 gan_eval.py \
 --niter 200 \
 --inputmodel dragan \
 --outf output_dragan \
---sampleSize 2000
+--sampleSize 1000
 
 python3 gan_eval.py \
 --dataset cifar10 \
@@ -83,7 +85,7 @@ python3 gan_eval.py \
 --niter 200 \
 --inputmodel dragan_gd \
 --outf output_dragan_gd \
---sampleSize 2000
+--sampleSize 1000
 
 python3 gan_eval.py \
 --dataset cifar10 \
