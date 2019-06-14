@@ -1,8 +1,8 @@
 # GAN Metrics
 
-This repository provides the code for octave conlution in GAN and evaluation.
-Evalution code is modified from https://github.com/xuqiantong/GAN-Metrics
-Original DCGAN code is from https://github.com/eriklindernoren/PyTorch-GAN/blob/master/implementations/dcgan/dcgan.py
+This repository provides the code for octave conlution in GAN and evaluation. \
+Evalution code is modified from https://github.com/xuqiantong/GAN-Metrics \
+Original DCGAN code is from https://github.com/eriklindernoren/PyTorch-GAN/blob/master/implementations/dcgan/dcgan.py \
 We implemented octave convolution in DCGAN and modified evaluation on different GANs.
 
 Requirement
